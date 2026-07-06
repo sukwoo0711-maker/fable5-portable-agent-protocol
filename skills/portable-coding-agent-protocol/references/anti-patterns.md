@@ -17,6 +17,12 @@ Use this module to review a failed run or tighten agent behavior.
 | Assuming host checks prove embedded target behavior | State the evidence layer and run target checks when available. |
 | Asking questions that do not change the next action | Make a reasonable assumption and proceed, then report it. |
 | Doing external or destructive work without approval | Stop and ask before irreversible, public, production, or device-affecting actions. |
+| Losing the original goal after exploration | Maintain a task ledger and re-check the latest user request before final response. |
+| Treating search results as proof | Open/read the target and tie claims to file content, command output, or test evidence. |
+| Continuing after repeated failed hypotheses | After two similar failures, change the diagnostic approach or narrow scope. |
+| Claiming equivalence from static inspection alone | Run before/after checks or label the refactor as not behavior-verified. |
+| Reporting intended edits instead of actual diffs | Inspect current diff/status before final response. |
+| Letting a weaker model handle broad work without phase gates | Split the task into evidence-producing slices with stop conditions. |
 
 ## Completion Gate
 

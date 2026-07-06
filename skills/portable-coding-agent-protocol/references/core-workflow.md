@@ -15,7 +15,24 @@ If the request is ambiguous, make the smallest reasonable assumption that keeps
 the work reversible. Ask only when different interpretations would produce
 materially different implementations or external side effects.
 
-## 2. Inspect Before Editing
+## 2. Maintain State
+
+For multi-step work, keep a compact task ledger:
+
+- Goal.
+- Done when.
+- Non-goals.
+- Assumptions.
+- Evidence observed.
+- Current phase.
+- Open questions.
+- Next action.
+- Stop condition.
+
+Use the ledger to prevent goal drift. Update it after failed hypotheses,
+meaningful edits, and verification results.
+
+## 3. Inspect Before Editing
 
 Before editing a file, read enough context to understand it:
 
@@ -28,7 +45,7 @@ Before editing a file, read enough context to understand it:
 
 Do not edit from a filename, stack frame, or diff hunk alone.
 
-## 3. Search Narrowly, Then Deepen
+## 4. Search Narrowly, Then Deepen
 
 Start with exact strings from the request: error messages, public API names,
 UI labels, function names, test names, filenames, or config keys.
@@ -39,7 +56,7 @@ directory structure only after string search fails or points to multiple areas.
 When a target function is found, trace definitions and call sites before
 changing its signature or behavior.
 
-## 4. Learn Existing Patterns
+## 5. Learn Existing Patterns
 
 Read two or three nearby examples before adding new code:
 
@@ -52,7 +69,7 @@ Read two or three nearby examples before adding new code:
 
 Use local patterns unless there is a concrete reason not to.
 
-## 5. Choose The Smallest Responsible Change
+## 6. Choose The Smallest Responsible Change
 
 Prefer changes in this order:
 
@@ -64,7 +81,7 @@ Prefer changes in this order:
 Add abstractions only when they remove real duplication or match an established
 project boundary. Leave discovered but unrelated issues as notes.
 
-## 6. Preserve User Work
+## 7. Preserve User Work
 
 Treat uncommitted or untracked files as user work unless you created them in the
 current task. Do not revert, reformat, or move unrelated changes.
@@ -72,7 +89,7 @@ current task. Do not revert, reformat, or move unrelated changes.
 If user changes overlap the target file, read carefully and build on them. Ask
 only if the overlap makes the requested task impossible or risky.
 
-## 7. Verify With Evidence
+## 8. Verify With Evidence
 
 Run the most specific useful check first, then broaden as time and risk require:
 
@@ -84,7 +101,23 @@ Run the most specific useful check first, then broaden as time and risk require:
 If no tests exist, run the changed path manually through a small script, command,
 simulator, emulator, UI interaction, device log, or other observable check.
 
-## 8. Report Clearly
+Evidence quality matters. Static inspection can support a hypothesis, but it is
+not the same as a passing runtime check. Label static-only conclusions as
+unverified when reporting.
+
+## 9. Review Before Final
+
+Before final response, inspect:
+
+- Current diff and status.
+- Verification output.
+- Scope boundaries.
+- Temporary logs, scratch files, and generated artifacts.
+- Whether every final claim has evidence.
+
+Downgrade or remove claims that lack evidence.
+
+## 10. Report Clearly
 
 Final reports must include:
 

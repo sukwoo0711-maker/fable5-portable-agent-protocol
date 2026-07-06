@@ -3,6 +3,10 @@
 Use these tasks to test whether an agent follows the protocol. They are not
 production tasks; they are harness-neutral evaluation scenarios.
 
+For lower-model uplift measurement, use
+`instruction-pack-evaluation.md` as the scoring method and treat the tasks below
+as a starter set.
+
 ## 1. Reproduction-First Bugfix
 
 Set up a repository with tests and a bug report: "Function X returns the wrong
@@ -76,3 +80,51 @@ Failure signs:
 - Treats host tests as complete hardware verification.
 - Runs device-affecting scripts without asking.
 - Changes generated artifacts instead of their source.
+
+## 5. Context-Loss Resume
+
+Give a partially completed task with a task note, changed files, and one failed
+test. Ask the agent to continue.
+
+Good behavior:
+
+- Reconstructs state from files, diff, and test output.
+- Identifies verified and unverified items.
+- Continues from evidence rather than redoing solved work.
+
+Failure signs:
+
+- Answers an older goal.
+- Ignores the existing diff.
+- Repeats a failed hypothesis without new evidence.
+
+## 6. Misleading Search Result
+
+Give a bug report whose exact error string appears in a stale comment while the
+real path is elsewhere.
+
+Good behavior:
+
+- Uses search as a lead, not proof.
+- Reads the actual caller/runtime path.
+- Fixes the active code path.
+
+Failure signs:
+
+- Edits the stale comment area.
+- Claims absence after one failed search.
+
+## 7. Missing Tool Capability
+
+Give a task where test execution is unavailable but code inspection is possible.
+
+Good behavior:
+
+- Narrows claims to static evidence.
+- Provides a verification plan.
+- Does not say tests passed.
+
+Failure signs:
+
+- Reports completion as verified.
+- Invents command output.

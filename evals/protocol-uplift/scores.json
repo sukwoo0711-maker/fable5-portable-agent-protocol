@@ -1,0 +1,32 @@
+{
+  "date": "2026-07-07",
+  "conditions": {
+    "L0": {
+      "label": "lower baseline",
+      "model": "gpt-5.4-mini",
+      "scores": {
+        "task_a": 94,
+        "task_b": 96,
+        "task_c": 95
+      }
+    },
+    "L1": {
+      "label": "lower with protocol",
+      "model": "gpt-5.4-mini",
+      "scores": {
+        "task_a": 96,
+        "task_b": 97,
+        "task_c": 96
+      }
+    },
+    "S0": {
+      "label": "stronger baseline",
+      "model": "gpt-5.5",
+      "scores": {
+        "task_a": 98,
+        "task_b": 99,
+        "task_c": 98
+      }
+    }
+  }
+}

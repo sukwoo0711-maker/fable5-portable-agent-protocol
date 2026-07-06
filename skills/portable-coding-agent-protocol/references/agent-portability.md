@@ -51,10 +51,26 @@ The core protocol assumes the agent can:
 - Run commands or request that checks be run.
 - Communicate progress and final results.
 
-Everything else is optional. If browsing, GUI control, device access, memory, or
-subagents are unavailable, use local substitutes and disclose the gap.
+Other capabilities are optional for portability, but not equal in effect.
+Long-horizon work degrades sharply without reliable command execution,
+persistent task state, and evidence capture. Disclose those gaps before
+accepting broad tasks.
 
-## 4. Multi-Agent Guidance
+## 4. Capability Assumptions
+
+For capability uplift, the agent or runtime should provide:
+
+- Task state that survives long work or compaction.
+- Reliable command output capture.
+- Diff and status inspection.
+- A way to run targeted checks.
+- A way to perform reviewer or critic passes.
+- Policy gates for destructive, external, production, or device-affecting work.
+
+If these are missing, use the protocol for scoped analysis or advisory patches
+instead of claiming full implementation.
+
+## 5. Multi-Agent Guidance
 
 Use parallel agents only for independent work:
 
@@ -66,7 +82,7 @@ Use parallel agents only for independent work:
 Do not delegate the immediate blocker if the main agent cannot proceed without
 the result. Keep delegated tasks concrete and bounded.
 
-## 5. Token-Efficient Layout
+## 6. Token-Efficient Layout
 
 Use a three-layer structure:
 
