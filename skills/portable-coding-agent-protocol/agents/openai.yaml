@@ -1,0 +1,7 @@
+interface:
+  display_name: "Portable Coding Agent Protocol"
+  short_description: "Scoped coding workflow for agentic edits."
+  default_prompt: "Use $portable-coding-agent-protocol to handle this coding task with scoped edits and explicit verification."
+
+policy:
+  allow_implicit_invocation: true
