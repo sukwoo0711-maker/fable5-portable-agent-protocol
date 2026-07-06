@@ -1,8 +1,8 @@
 # Pilot Report: Protocol Uplift
 
-Date: 2026-07-07  
-Repository commit at test time: local working tree after lower-model
-amplification patch, before commit  
+Date: 2026-07-07
+Patch commit containing this report: `3a8744f`
+Test state: local working tree after lower-model amplification patch
 Harness: Codex multi-agent local session  
 Task file: `evals/protocol-uplift/pilot-tasks.md`  
 Rubric: `evals/protocol-uplift/scoring-rubric.md`
