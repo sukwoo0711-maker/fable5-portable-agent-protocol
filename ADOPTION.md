@@ -99,6 +99,12 @@ that defines and measures that claim.
 6. Measure failures and revise adapters.
 7. Expand to higher-risk repositories only after evidence improves.
 
+For secure enterprise AX environments that combine a strong control plane,
+Gemini-style cloud workers, and local LLM scouting, use
+`playbooks/secure-enterprise-ax-gemini-worker-playbook.md` as the deployment
+guide. Treat public community reports as risk-discovery signals only; enforce
+behavior through adapters, schemas, logs, approvals, and verification.
+
 ## Non-Goals
 
 This protocol does not replace organization security policy, CI policy, code

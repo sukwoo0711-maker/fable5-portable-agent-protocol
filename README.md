@@ -13,6 +13,9 @@ rules.
 ## Structure
 
 - `AGENTS.md` is the short always-loaded entry point for compatible agents.
+- `playbooks/secure-enterprise-ax-gemini-worker-playbook.md` is a public-safe
+  deployment playbook for secure enterprise AX environments using Gemini-style
+  workers under a stronger control plane.
 - `skills/portable-coding-agent-protocol/SKILL.md` is the installable skill entry.
 - `skills/portable-coding-agent-protocol/references/` holds lazy-loaded modules.
 - `skills/portable-coding-agent-protocol/adapters/` holds concrete runtime
@@ -51,6 +54,10 @@ Example invocation for environments that support skills:
 Use $portable-coding-agent-protocol to handle this coding task with scoped edits
 and explicit verification.
 ```
+
+For secure enterprise AX deployments that use Gemini or another lower-cost cloud
+model as a worker, start with the secure enterprise playbook and then fill in the
+Gemini worker and self-healing routine adapters.
 
 ## What This Does Not Promise
 

@@ -99,6 +99,10 @@ Use `adapters/` when a concrete runtime mapping or lower-model form is needed:
 - `adapters/runtime-capabilities.yaml` for capability, approval, and logging maps.
 - `adapters/task-mode-selector.md` for tiny, standard, high-risk, and eval modes.
 - `adapters/lower-model-run-prompt.md` for lower-model execution scaffolding.
+- `adapters/gemini-worker-contracts.md` for schema-bound Gemini-style worker
+  roles under a stronger control plane.
+- `adapters/self-healing-routine.md` for scheduled or event-triggered recovery
+  loops that must remain bounded and reviewable.
 - `adapters/task-ledger.txt`, `adapters/pre-edit-checklist.md`,
   `adapters/evidence-record.md`, and `adapters/pre-final-review.md` for
   external working-memory forms.

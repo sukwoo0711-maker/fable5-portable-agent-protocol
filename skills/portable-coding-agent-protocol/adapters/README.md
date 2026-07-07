@@ -29,6 +29,10 @@ approvals requested, checks observed, and final claims tied to evidence.
 - `task-mode-selector.md`: choose tiny, standard, high-risk, or eval controls.
 - `lower-model-run-prompt.md`: compact prompt wrapper for lower-capability
   models.
+- `gemini-worker-contracts.md`: schema-bound contracts for Gemini-style
+  dispatcher, compressor, planner, candidate, and diff-claim workers.
+- `self-healing-routine.md`: bounded scheduled/event automation loop with
+  allowlists, retry limits, evidence logging, and escalation.
 - `task-ledger.txt`: external working-memory form.
 - `pre-edit-checklist.md`: concrete before-edit guard.
 - `evidence-record.md`: claim-to-evidence form.
