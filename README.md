@@ -15,6 +15,10 @@ rules.
 - `AGENTS.md` is the short always-loaded entry point for compatible agents.
 - `skills/portable-coding-agent-protocol/SKILL.md` is the installable skill entry.
 - `skills/portable-coding-agent-protocol/references/` holds lazy-loaded modules.
+- `skills/portable-coding-agent-protocol/adapters/` holds concrete runtime
+  mapping templates and lower-model forms.
+- `evals/protocol-uplift/` holds local evaluation plans, rubrics, and pilot
+  results.
 - `ADOPTION.md` helps teams decide whether and how to migrate an existing agent
   architecture.
 
@@ -30,12 +34,14 @@ sandbox, or a specific tool API. Product-specific bindings belong in adapters.
 
 Normative requirements are behavior-level:
 
+- Classify task size and scale the process.
 - Maintain task state for multi-step work.
 - Inspect before editing.
 - Preserve local work.
 - Keep diffs scoped.
 - Verify with evidence.
 - Disclose missing checks.
+- Complete a visible or internal completion gate before final claims.
 - Run a pre-final self-review.
 - Ask before destructive, external, production, or device-affecting actions.
 
@@ -57,6 +63,10 @@ and explicit verification.
 The honest claim is narrower: on suitable tasks, the protocol should reduce
 predictable agent failure modes and may close part of the process-quality gap to
 stronger models. Measure that locally before broad rollout.
+
+In other words, this repo is aligned with a "make lower models behave more like
+disciplined long-horizon coding agents" goal only when adapters and evaluation
+are used. The Markdown alone is not a safety mechanism or proof of equivalence.
 
 ## Evaluation
 

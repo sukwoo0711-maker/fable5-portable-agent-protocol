@@ -14,6 +14,10 @@ Runtime-specific details belong in adapters: tool names, shell, filesystem,
 sandbox, approval model, browser or hardware access, memory, subagents, and
 reporting channels.
 
+The protocol is aligned with lower-model amplification only when the adopter
+also supplies adapter mappings, completion-gate artifacts, and evaluation
+evidence. Prose-only rollout is advisory guidance, not governance.
+
 ## Decision Criteria
 
 Adopt when:
@@ -82,6 +86,8 @@ Do not adopt as-is when:
   approvals, tool permissions, logging, and evaluation gates.
 
 Do not describe Level 0 or Level 1 adoption as safety enforcement.
+Do not describe any level as Fable5-equivalent without local staged evaluation
+that defines and measures that claim.
 
 ## Rollout Path
 

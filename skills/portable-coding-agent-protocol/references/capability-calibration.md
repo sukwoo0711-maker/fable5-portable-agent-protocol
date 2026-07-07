@@ -54,3 +54,15 @@ Do not let fluent explanation substitute for evidence.
 
 For lower-capability agents, prefer thin vertical slices over broad horizontal
 work. A slice should produce observable evidence before the next slice begins.
+
+## Model-Tier Calibration
+
+| Tier | Typical risk | Required stance |
+| --- | --- | --- |
+| Lower | Loses goal, stops early, overclaims, misses call paths | Externalize state, use visible gates, keep edits small, require explicit evidence. |
+| Mid | Usually follows tasks but may skip edge verification | Compress tiny work, keep completion gate and diff/evidence audit for meaningful edits. |
+| Frontier | Better implicit planning but may over-act or over-refactor | Scale down ceremony, keep boundaries, approval gates, and claim discipline. |
+
+Do not ask a lower model to compensate for missing tools or missing information
+by reasoning harder. Narrow the task, add an adapter capability, or escalate to a
+stronger verifier.

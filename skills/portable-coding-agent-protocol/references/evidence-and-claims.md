@@ -28,6 +28,14 @@ Use the strongest true label. Do not upgrade evidence by wording.
 ## Final Report Template
 
 ```text
+Completion Gate:
+- Done condition met:
+- Diff/status inspected:
+- Verification run:
+- Missing evidence disclosed:
+- Scope audit:
+- Stop reason:
+
 Outcome:
 Changes:
 Evidence:
@@ -37,6 +45,10 @@ Risks or follow-ups:
 ```
 
 Keep it short, but do not omit missing evidence.
+
+The completion gate may be internal for tiny tasks. For small or larger tasks,
+include it when the runtime, reviewer, or evaluation harness needs visible
+evidence of disciplined completion.
 
 ## Forbidden Claim Patterns
 

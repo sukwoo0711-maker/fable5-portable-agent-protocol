@@ -36,7 +36,36 @@ Use observations that distinguish one cause from another:
 
 If the same hypothesis fails twice, change the diagnostic approach.
 
-## 4. Fix The Cause, Not Only The Symptom
+## 4. Diagnostic Mode vs Fix Mode
+
+Start in Diagnostic Mode unless the user explicitly asks for a straightforward
+known fix and the evidence already identifies the target.
+
+Diagnostic Mode allows:
+
+- Reading files, logs, tests, config, and history.
+- Running reproductions, targeted tests, static checks, simulators, or probes.
+- Adding temporary diagnostics only when they are removed before completion.
+- Writing a regression test only when the expected behavior is known.
+
+Diagnostic Mode does not allow:
+
+- Editing implementation to "see if it works" without a named hypothesis.
+- Changing expected test output to match current behavior.
+- Calling the work fixed before post-change evidence exists.
+
+Switch to Fix Mode only when at least one is true:
+
+- Reproduction evidence identifies the failing path.
+- Code-path evidence identifies where invalid state is created.
+- The user explicitly accepts a symptom-level guard or workaround.
+- Missing tools make reproduction impossible and the final claim will be
+  static-only or unverified.
+
+If the user's request is diagnostic-only, report findings and stop. Do not apply
+a fix until asked.
+
+## 5. Fix The Cause, Not Only The Symptom
 
 Before adding defensive code, identify where the invalid state is created. Fix
 the creation point when possible.
@@ -49,7 +78,7 @@ Symptom blocking is acceptable only when:
 
 When using a symptom-level guard, state that explicitly in the report.
 
-## 5. Lock The Regression
+## 6. Lock The Regression
 
 Add or update a test for the reproduced failure when the project has a test
 practice. If tests do not exist, record the manual reproduction and verification

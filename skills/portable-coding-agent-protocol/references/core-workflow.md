@@ -2,6 +2,21 @@
 
 Use this module for every coding task.
 
+## 0. Classify Task Size
+
+Choose the smallest process profile that can still prevent false completion:
+
+| Size | Examples | Required controls |
+| --- | --- | --- |
+| Tiny | One-line text, config, or comment change with no behavior claim | Define done, inspect target, check diff/status if VCS exists, disclose unverified. |
+| Small | Single-file bugfix, narrow feature, local testable edit | Tiny controls plus caller/test context, targeted verification, completion gate. |
+| Medium | Multi-file change, uncertain bug, generated files, public API, embedded host checks | Small controls plus task ledger, baseline or reproduction, failed-hypothesis tracking, self-review. |
+| Large | Broad refactor, migration, resumed work, hardware/production/security impact | Medium controls plus checkpoint files, separate critic/verifier, explicit approval boundaries, staged verification. |
+
+For lower-capability models, default one size higher when the task is ambiguous.
+For frontier models, controls may be compressed, but evidence, approval, and
+final-claim rules are never optional.
+
 ## 1. Define Done
 
 Write the completion condition in observable terms:
@@ -56,6 +71,10 @@ directory structure only after string search fails or points to multiple areas.
 When a target function is found, trace definitions and call sites before
 changing its signature or behavior.
 
+Default search tripwire: try at least three meaningfully different search keys
+before concluding that something is absent. If three searches disagree, inspect
+the active call path rather than trusting search alone.
+
 ## 5. Learn Existing Patterns
 
 Read two or three nearby examples before adding new code:
@@ -105,6 +124,10 @@ Evidence quality matters. Static inspection can support a hypothesis, but it is
 not the same as a passing runtime check. Label static-only conclusions as
 unverified when reporting.
 
+Default verification tripwire: after two failed verification cycles with the
+same failure shape, stop repeating edits and change the diagnostic approach.
+Record the failed hypothesis before continuing.
+
 ## 9. Review Before Final
 
 Before final response, inspect:
@@ -117,7 +140,36 @@ Before final response, inspect:
 
 Downgrade or remove claims that lack evidence.
 
-## 10. Report Clearly
+## 10. Completion Gate
+
+Before any final response on a small or larger task, produce or internally
+complete this gate:
+
+```text
+Completion Gate:
+- Done condition met: yes/no/partial, with evidence.
+- Diff/status inspected: yes/no/not applicable.
+- Verification run: command or method plus result.
+- Missing evidence disclosed: yes/no/not applicable.
+- Scope audit: only requested changes, or named exception.
+- Stop reason: complete, blocked by missing input, or explicitly diagnostic-only.
+```
+
+If any answer is `no`, the final report must either keep working, narrow the
+claim, or name the blocker.
+
+## 11. Early-Termination Guard
+
+Before ending, check the last paragraph of the planned response. If it is a
+plan, a question, a list of next steps, or a promise about reversible work that
+follows from the request, do that work now. End only when the task is complete,
+diagnostic-only by request, or blocked on input only the user can provide.
+
+Do not end with "I can", "next I would", "let me know if", "shall I", or
+equivalent non-blocking permission requests when the original request already
+authorized the work.
+
+## 12. Report Clearly
 
 Final reports must include:
 

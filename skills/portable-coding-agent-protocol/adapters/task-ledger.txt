@@ -1,0 +1,12 @@
+Goal:
+Done when:
+Non-goals:
+Approval boundaries:
+Known facts:
+Assumptions:
+Files/context inspected:
+Evidence observed:
+Current phase:
+Next action:
+Failed hypotheses:
+Stop/ask condition:

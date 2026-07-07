@@ -26,6 +26,10 @@ rules.
 3. Read control modules when they apply:
    - `references/long-horizon-control.md` for multi-step, ambiguous, resumed, or
      long-running tasks.
+   - `references/control-budgets.md` when a lower-capability model needs numeric
+     tripwires for search, failed hypotheses, verification, or review depth.
+   - `references/long-work-scaffolding.md` when durable task, todo, or checkpoint
+     files are needed.
    - `references/capability-calibration.md` when tool gaps, uncertainty, or
      model limits affect the work.
    - `references/evidence-and-claims.md` whenever claims must be tied to real
@@ -38,6 +42,8 @@ rules.
    - `references/bugfix-workflow.md` for defects, regressions, errors, or failing tests.
    - `references/feature-workflow.md` for new or changed behavior.
    - `references/refactor-workflow.md` for behavior-preserving structure changes.
+   - `references/repository-analysis.md` for analysis-only repository assessment,
+     migration review, architecture discovery, or instruction-pack critique.
 5. Read `references/embedded-porting.md` for firmware, cross-compilers, boards,
    flash/debug tools, hardware logs, RTOS, drivers, or lab constraints.
 6. Read `references/self-review.md` before finalizing meaningful edits.
@@ -47,6 +53,7 @@ rules.
    this protocol into an existing agent architecture.
 9. Read `references/instruction-pack-evaluation.md` when measuring lower-model
    uplift or comparing against a stronger model.
+   Read `references/evaluation-tasks.md` for starter task scenarios.
 10. Read `references/anti-patterns.md` when reviewing a failed run or tightening
    operating rules.
 11. Read `references/source-notes.md` only when provenance or public reference
@@ -86,3 +93,14 @@ Before applying a rule, map it to the current environment:
 If a capability is unavailable, choose the closest safe substitute only when it
 can still produce relevant evidence. Otherwise narrow the task, ask for help, or
 report the work as unverified.
+
+Use `adapters/` when a concrete runtime mapping or lower-model form is needed:
+
+- `adapters/runtime-capabilities.yaml` for capability, approval, and logging maps.
+- `adapters/task-mode-selector.md` for tiny, standard, high-risk, and eval modes.
+- `adapters/lower-model-run-prompt.md` for lower-model execution scaffolding.
+- `adapters/task-ledger.txt`, `adapters/pre-edit-checklist.md`,
+  `adapters/evidence-record.md`, and `adapters/pre-final-review.md` for
+  external working-memory forms.
+- `adapters/codex.md` and `adapters/generic-embedded-agent.md` as
+  non-normative mapping examples.

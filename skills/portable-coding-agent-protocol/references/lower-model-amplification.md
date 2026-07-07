@@ -5,8 +5,12 @@ handle work that would normally benefit from a stronger long-horizon model.
 
 ## Principle
 
-Do not pretend the weaker model became stronger. Move part of the missing
-executive function into the procedure:
+Do not pretend the weaker model became stronger. The goal is narrower: make a
+lower or mid-capability model reproduce selected frontier-agent operating
+behaviors more often, especially persistence, scope control, evidence-grounded
+claims, and verification before final output.
+
+Move part of the missing executive function into the procedure:
 
 - Keep task state outside short-term attention.
 - Make phase gates explicit.
@@ -14,6 +18,10 @@ executive function into the procedure:
 - Require evidence before claims.
 - Run a separate critic or verifier pass before final output.
 - Stop or narrow scope when the evidence path is not available.
+
+This is a correction device for lower and mid models, not a capability upgrade.
+It can reduce predictable process failures, but it cannot supply missing domain
+knowledge, tool access, long-context reliability, or judgment.
 
 ## Amplification Loop
 
@@ -31,6 +39,10 @@ Run this loop for meaningful coding work:
 
 For small tasks, compress the loop into a few sentences. For long tasks, keep a
 task ledger.
+
+For lower models, make the loop visible in the working artifact or final report
+when the task is medium or larger. Hidden discipline is less reliable than
+external state.
 
 ## Task Ledger
 
@@ -82,3 +94,17 @@ The best honest claim is:
 
 > This protocol can improve disciplined agent behavior and reduce predictable
 > failures. It does not guarantee frontier-model capability.
+
+Do not claim "Fable5-grade performance" unless a local evaluation defines that
+term operationally and shows the target model meeting it. Prefer:
+
+> On these local tasks, the lower model showed improved Fable-inspired operating
+> behavior under this protocol.
+
+## Scale By Model Tier
+
+- Lower model: use explicit ledgers, task-size classification, completion gates,
+  numeric tripwires, and a critic pass for non-trivial work.
+- Mid model: keep the same gates but compress tiny and small tasks.
+- Frontier model: compress routine checklists, but still preserve approval,
+  evidence, scope, and final-claim rules.

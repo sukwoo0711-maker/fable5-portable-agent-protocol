@@ -3,146 +3,118 @@
 These notes explain public-reference inputs behind this protocol. They are not
 required for normal coding tasks and are not normative requirements.
 
-## High-Confidence References
+The source window for the 2026-07-07 approval pass was 2026-04-07 through
+2026-07-07 unless a source is official living documentation retrieved during the
+pass.
 
-- Anthropic, "Prompting Claude Fable 5":
+## Evidence Labels
+
+| Label | Meaning | Allowed use |
+| --- | --- | --- |
+| A0 | Official, dated within the review window | Product behavior, compatibility, release claims |
+| A1 | Official living docs retrieved during the review | Current product mechanics; cite access date |
+| B1 | Active, highly starred or widely used project updated in the window | Implementation or evaluation precedent, not product guarantees |
+| B2 | Recognized expert dated in the window | Anecdotal risk or design signal only |
+| C | Vendor, press, or low-star community source | Topic discovery only |
+| D | Undated, low-trust, transcriptless video, leaked or alleged prompt source | Not evidence |
+
+Broad claims such as "improves lower models" require local evaluation results or
+must be phrased as a hypothesis.
+
+## Accepted References
+
+- A0, Anthropic, "Prompting Claude Fable 5":
   https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5
-  - Contributed patterns for long-running tasks, acting when enough context
-    exists, explicit self-verification, progress handling, final-summary
-    readability, and avoiding stale over-prescriptive prompts.
+  - Supports Fable-specific operating patterns: long-running action, progress
+    claim grounding, boundary setting, early-stopping prevention, memory, and
+    subagent guidance.
+  - Limit: Fable-specific guidance does not prove that other models gain the
+    same capability.
 
-- Anthropic, "Introducing Claude Fable 5 and Claude Mythos 5":
+- A0, Anthropic, "Introducing Claude Fable 5 and Claude Mythos 5":
   https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5
-  - Contributed migration implications: long-horizon agentic work, refusal
-    handling, fallback behavior, effort control, task budgets, and why some
-    details belong in a harness adapter rather than the core protocol.
+  - Supports Fable capability and integration claims such as long-horizon
+    agentic work and refusal/fallback handling.
+  - Limit: product capability source, not a portable-protocol evaluation.
 
-- Anthropic, "System Prompts":
-  https://platform.claude.com/docs/en/release-notes/system-prompts
-  - Confirms that product UI, API, and coding-agent surfaces should not be
-    treated as one interchangeable prompt environment.
-
-- AGENTS.md open format:
-  https://agents.md/
-  - Supports a predictable repository-level instruction format across multiple
-    coding agents.
-
-- OpenAI Codex, "Custom instructions with AGENTS.md":
+- A1, OpenAI Codex, "Custom instructions with AGENTS.md":
   https://developers.openai.com/codex/guides/agents-md
-  - Confirms instruction layering, project overrides, and size limits in one
-    major coding-agent environment. Used as a portability data point, not as a
-    required runtime.
+  - Supports Codex instruction discovery, layering, precedence, and size-limit
+    mechanics.
+  - Limit: Codex-specific behavior belongs in adapters.
 
-## Evaluation References
+- A1, OpenAI Codex, "Agent Skills":
+  https://developers.openai.com/codex/skills
+  - Supports skill packaging with `SKILL.md`, references, scripts, assets, and
+    agents.
+  - Limit: packaging precedent, not proof of model uplift.
 
-- SWE-bench:
+- A1, OpenAI Codex, "Subagents":
+  https://developers.openai.com/codex/concepts/subagents
+  - Supports explicit subagent triggering and the cost/coordination tradeoff.
+  - Limit: subagents are optional and should not be required by the core.
+
+- A0, GitHub Changelog, "Copilot code review: AGENTS.md support and UI
+  improvements", 2026-06-18:
+  https://github.blog/changelog/2026-06-18-copilot-code-review-agents-md-support-and-ui-improvements/
+  - Supports repository-level `AGENTS.md` as a cross-agent portability signal.
+  - Limit: Copilot review-specific, not a universal instruction standard.
+
+- B1, AGENTS.md open format:
+  https://agents.md/
+  - Supports a predictable repository-level instruction format used across many
+    open-source projects.
+  - Limit: ecosystem signal, not tool-behavior proof.
+
+- B1, Inspect AI changelog and docs:
+  https://inspect.aisi.org.uk/CHANGELOG.html
+  - Supports current evaluation-harness precedent for agent, model, logging, and
+    tool-integration mechanics.
+  - Limit: this repo does not require Inspect AI.
+
+- B1, SWE-bench:
   https://www.swebench.com/SWE-bench/
-  - Useful precedent for patch-based software-engineering evaluation on real
-    issues with reproducible harnesses.
+  - Useful precedent for patch-based software-engineering evaluation on
+    reproducible issues.
+  - Limit: too heavy to claim from this repo's pilot alone.
 
-- Inspect AI:
-  https://inspect.aisi.org.uk/
-  - Useful as a future formal evaluation framework for coding, agentic,
-    reasoning, behavior, and multimodal evals.
+- B1, OpenAI Evals:
+  https://github.com/openai/evals
+  - Useful precedent for evaluating language-model systems with explicit
+    samples, scorers, and run artifacts.
+  - Limit: framework precedent only; this repo's claims still require local
+    results.
 
-- mini-swe-agent:
+- B1, mini-swe-agent:
   https://github.com/SWE-agent/mini-swe-agent
-  - Useful as a simple local agent-harness reference. Not required by this repo.
+  - Useful active local agent-harness reference.
+  - Limit: implementation precedent only.
 
-## Community Signals
+- B2, Addy Osmani, "Loop Engineering":
+  https://addyosmani.com/blog/loop-engineering/
+  - Recognized-practitioner signal that agent workflows are moving from one-shot
+    prompts toward loops, checks, and automation.
+  - Limit: expert framing, not evaluation evidence.
 
-These sources show user demand and recurring design patterns. Treat them as
-anecdotal unless their claims are independently verified.
+## Quarantined Or Rejected As Evidence
 
-- CodeRabbit, "Claude Fable 5 Model Review":
-  https://www.coderabbit.ai/blog/fable-5-model-review
-  - Supports the tradeoff that Fable5-like behavior can be strong for autonomous
-    implementation but needs stop conditions, budgets, and review checkpoints.
-
-- CheswickDEV, "claude-fable-5-prompt-optimizer":
-  https://github.com/CheswickDEV/claude-fable-5-prompt-optimizer
-  - Community implementation of doc-grounded prompt optimization, target
-    detection, complexity routing, anti-pattern scans, and auditable rule
-    references.
-
-- kpab, "claude-fable-5-skills":
-  https://github.com/kpab/claude-fable-5-skills
-  - Shows demand for short skill modules organized around intent, boundaries,
-    and verification hooks.
-
-- tomicz, "fable-5-train-opus-skills-after-it-retires":
-  https://github.com/tomicz/fable-5-train-opus-skills-after-it-retires
-  - Strong demand signal for "use Fable-like skills with cheaper models." Its
-    review phases influenced this repo's factual/doctrine/usability review
-    split, but its prompt text is not copied.
-
-- vasilichnick, "fable5":
-  https://github.com/vasilichnick/fable5
-  - Example of recon-first, batched-question, spec-playback workflow.
-
-- AlessandroFare, "fable-frame":
-  https://github.com/AlessandroFare/fable-frame
-  - Example of packaging Fable-inspired behavior modules with agent
-    orchestration templates.
-
-- unclecatvn, "rigorous-execution-skill":
-  https://github.com/unclecatvn/rigorous-execution-skill
-  - Example of evidence-grounded reports and calibrated autonomy as a reusable
-    skill.
-
-- habinsong, "k-fable-opus-claude-md":
-  https://github.com/habinsong/k-fable-opus-claude-md
-  - Korean-language community adaptation focused on small edits, prior
-    inspection, verification, concise reporting, and dangerous-command caution.
-
-- Simon Willison, "Claude Fable is relentlessly proactive":
-  https://simonwillison.net/2026/jun/11/fable-is-relentlessly-proactive/
-  - Practitioner observation that frontier coding agents may invent powerful
-    local tactics unless bounded. Supports explicit safety gates and budget
-    awareness.
-
-- Business Insider, "Forget prompt engineering: 'Loop engineering' is all the rage now":
-  https://www.businessinsider.com/what-are-loops-ai-engineering-tips-2026-6
-  - Useful as a public signal that agent users are moving from one-shot prompts
-    toward loops involving automation, skills, connectors, and subagents.
-
-## YouTube Search Notes
-
-YouTube search found multiple relevant videos, including:
-
-- "Claude Fable 5 Built This in Claude Code and I'm Blown Away":
-  https://www.youtube.com/watch?v=I3PYGi_tGy0
-- "How Anthropic Engineers Actually Prompt Fable 5":
-  https://www.youtube.com/watch?v=vcU85OrwuV0
-- "How to Build Claude Subagents Better Than 99% of People":
-  https://www.youtube.com/watch?v=e18sdZLwP7o
-- "How to use agents, skills, and instructions in Copilot CLI":
-  https://www.youtube.com/watch?v=-yKALFS5ewY
-
-These were used only as weak demand and topic-discovery signals because the
-search surface exposed metadata and snippets, not a reliable transcript.
-
-## Considered But Not Normative
-
-- Leaked or alleged system prompts.
-- Reddit prompt templates.
-- Community prompt packs without reproducible before/after evidence.
-- Videos without accessible transcripts.
-
-These may inspire pattern mining, but they must not be copied wholesale or
-treated as proof of efficacy.
+- Low-star Fable prompt packs and skill repos: useful for demand discovery and
+  anti-pattern mining, not for efficacy claims.
+- Vendor reviews and press trend pieces: useful for topic discovery only.
+- Transcriptless YouTube results: not evidence unless the dated transcript is
+  accessible and the author qualifies as a recognized expert.
+- Leaked or alleged system prompts, Reddit prompt templates, and copied prompt
+  packs: do not copy and do not treat as proof.
 
 ## Incorporation Decisions
 
-- Reframe the repo from "portable coding protocol" to "capability scaffolding
-  plus portability."
+- Reframe the repo as lower-model operating-behavior scaffolding, not model
+  equivalence.
 - Keep official and observed behavior patterns, not provider-specific prompt
   text.
-- Do not copy leaked system prompts or community templates verbatim.
-- Keep core rules model-neutral and put product or harness details in adapters.
-- Replace monolithic instructions with a small entry point and lazy-loaded
-  references.
+- Put product or harness details in adapters.
+- Keep the core protocol model-neutral and capability-oriented.
+- Use lazy-loaded references rather than one monolithic instruction file.
 - Add lower-model scaffolds for state, decomposition, evidence, uncertainty,
-  recovery, self-review, and stop rules.
-- Add embedded-specific gates for target verification, generated/vendor files,
-  and hardware safety.
+  recovery, self-review, stop rules, and completion gates.
+- Require local evaluation before claiming uplift.

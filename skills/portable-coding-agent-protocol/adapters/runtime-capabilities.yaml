@@ -1,0 +1,67 @@
+protocol_version: "portable-coding-agent-protocol@unreleased"
+adapter_id: "<runtime-or-team-name>"
+enforcement_level: "advisory | audited | enforced"
+
+instruction_precedence:
+  organization_policy: "<highest/lower/notes>"
+  project_instructions: "<path or discovery mechanism>"
+  directory_instructions: "<path or discovery mechanism>"
+  user_request: "<precedence rule>"
+  conflict_resolution: "<how conflicts are surfaced>"
+
+capabilities:
+  search_project:
+    mechanism: "<runtime tool, command, or UI action>"
+    evidence_artifact: "<captured output/log>"
+    fallback: "<safe fallback or unavailable>"
+  list_files:
+    mechanism: "<...>"
+    evidence_artifact: "<...>"
+  read_file:
+    mechanism: "<...>"
+    evidence_artifact: "<...>"
+  edit_file:
+    mechanism: "<patch/editor/API>"
+    safety_properties:
+      - diffable
+      - non_destructive
+      - preserves_user_work
+  run_command:
+    mechanism: "<shell/job runner/request human>"
+    captures_exit_code: true
+    captures_output: true
+  inspect_diff:
+    mechanism: "<vcs/status/diff tool>"
+    evidence_artifact: "<status and diff output>"
+  request_approval:
+    mechanism: "<approval UI / ask user / unavailable>"
+  report_progress:
+    mechanism: "<status/progress channel>"
+  report_final:
+    mechanism: "<final response channel>"
+  memory_or_checkpoint:
+    mechanism: "<task files/runtime memory/unavailable>"
+  subagent_or_verifier:
+    mechanism: "<parallel agent/reviewer/static self-review/unavailable>"
+
+approval_boundaries:
+  destructive: "ask first"
+  external_network_or_posting: "ask first"
+  production_or_shared_infra: "ask first"
+  hardware_flash_or_device_change: "ask first"
+  secrets_or_credentials: "ask first"
+
+verification_policy:
+  default_order:
+    - targeted_test
+    - package_test
+    - build_or_typecheck
+    - broader_suite
+  missing_capability_response: "label as not verified; narrow scope or ask"
+
+logging_policy:
+  capture_files_read: true
+  capture_commands: true
+  capture_exit_codes: true
+  capture_diff_status: true
+  capture_final_claims: true

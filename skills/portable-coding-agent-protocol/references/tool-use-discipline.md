@@ -27,6 +27,20 @@ Use product-specific tool names only inside the adapter.
 - Do not summarize a command as successful unless the output proves it.
 - If output is truncated, rerun a narrower command or disclose the truncation.
 
+## Progress Claim Audit
+
+Before reporting progress, map each claim to a current-session artifact:
+
+- File or config read.
+- Search result.
+- Diff/status output.
+- Command, test, build, simulator, device, or UI result.
+- User-provided fact.
+
+If a progress claim lacks evidence, label it as an inference or omit it. Do not
+say that tests pass, a bug is fixed, a device is safe, or unrelated files are
+untouched unless the corresponding evidence was observed.
+
 ## Parallel Work
 
 Parallelize only independent work:

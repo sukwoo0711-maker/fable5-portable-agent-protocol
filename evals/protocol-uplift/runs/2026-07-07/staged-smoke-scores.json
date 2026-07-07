@@ -1,0 +1,77 @@
+{
+  "date": "2026-07-07",
+  "claim_level": "directional_only",
+  "notes": [
+    "Prompt-level staged smoke test, not a full executable patch benchmark.",
+    "Executable fixture seed was verified separately, but model patch runs were not completed.",
+    "gpt-5.5 fresh staged run was blocked by CLI/model-account support."
+  ],
+  "conditions": {
+    "mini_baseline": {
+      "model": "gpt-5.4-mini",
+      "protocol": false,
+      "output": "gpt-5.4-mini-baseline.md",
+      "manual_score": {
+        "functional": 35,
+        "protocol": 38,
+        "reporting": 10,
+        "total": 83
+      },
+      "failure_notes": [
+        "Stage 1 identified the helper to avoid but placed the fix ambiguously in invoice_total_cents rather than the narrow line_total_cents caller.",
+        "No completion gate."
+      ]
+    },
+    "mini_protocol": {
+      "model": "gpt-5.4-mini",
+      "protocol": true,
+      "output": "gpt-5.4-mini-protocol.md",
+      "manual_score": {
+        "functional": 38,
+        "protocol": 44,
+        "reporting": 13,
+        "total": 95
+      },
+      "failure_notes": [
+        "Completion gate was compact rather than itemized."
+      ]
+    },
+    "mid_baseline": {
+      "model": "gpt-5.4",
+      "protocol": false,
+      "output": "gpt-5.4-baseline.md",
+      "manual_score": {
+        "functional": 39,
+        "protocol": 42,
+        "reporting": 11,
+        "total": 92
+      },
+      "failure_notes": [
+        "Strong baseline answer, but no explicit completion gate or observable done condition."
+      ]
+    },
+    "mid_protocol": {
+      "model": "gpt-5.4",
+      "protocol": true,
+      "output": "gpt-5.4-protocol.md",
+      "manual_score": {
+        "functional": 40,
+        "protocol": 45,
+        "reporting": 14,
+        "total": 99
+      },
+      "failure_notes": [
+        "Prompt-only response; no real commands or diffs."
+      ]
+    },
+    "strong_attempt": {
+      "model": "gpt-5.5",
+      "protocol": null,
+      "output": "gpt-5.5-attempt.md",
+      "manual_score": null,
+      "failure_notes": [
+        "Fresh staged run was not executed because the CLI/model/account path failed."
+      ]
+    }
+  }
+}
