@@ -74,6 +74,9 @@ must be phrased as a hypothesis.
 - A1, Gemini API, "What's new in Gemini 3.5 Flash":
   https://ai.google.dev/gemini-api/docs/whats-new-gemini-3.5
   - Supports `thinking_level` as the current Gemini 3.5 Flash control surface.
+  - Supports lower thinking levels for latency/cost-sensitive code and agentic
+    tasks, and recommends reducing unnecessary tool calls with lower thinking
+    levels or explicit system instructions.
   - Limit: only applies to supported Gemini 3.5 API surfaces.
 
 - A1, Gemini API, "Zero data retention in the Gemini Developer API":
@@ -82,6 +85,16 @@ must be phrased as a hypothesis.
     for Interactions API state, grounding retention, File API storage, explicit
     cache storage, and implicit in-memory cache behavior.
   - Limit: enterprise policy must still decide which features are allowed.
+
+- A1, Gemini Enterprise Agent Platform, "Gemini Enterprise Agent Platform and
+  zero data retention":
+  https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/zero-data-retention
+  - Supports enterprise ZDR nuance: training restrictions, abuse-monitoring
+    exceptions, grounding retention, request-response logging settings, session
+    resumption, and in-memory caching are feature- and configuration-dependent.
+  - Limit: contract and platform controls reduce provider-side retention risk;
+    they do not decide which internal details should be published in a public
+    protocol repo.
 
 - A1, Gemini API, "Context caching" and "Batch API":
   https://ai.google.dev/gemini-api/docs/caching
@@ -149,6 +162,28 @@ must be phrased as a hypothesis.
     proxy control, telemetry without prompt logging, and disabling YOLO mode.
   - Limit: local admin users may bypass configuration; this is policy support,
     not a foolproof security boundary.
+
+- A1, Gemini CLI configuration reference:
+  https://geminicli.com/docs/reference/configuration/
+  - Supports concrete configuration surfaces for sandboxing, allowed/excluded
+    tools, confirmation-required tools, MCP allow/exclude lists, telemetry,
+    prompt logging, and trace destinations.
+  - Limit: available settings still need local broker enforcement and review.
+
+- A1, Gemini CLI trusted folders:
+  https://geminicli.com/docs/cli/trusted-folders/
+  - Supports treating workspace trust as a first-class control before loading
+    project configuration and granting full CLI capabilities.
+  - Limit: folder trust is one control, not a replacement for input trust,
+    allowlists, and sandboxing.
+
+- A1, GitHub Security Advisory GHSA-wpqr-6v78-jr5g, "Update to Gemini CLI and
+  run-gemini-cli Trust Model", 2026-04-24:
+  https://github.com/google-github-actions/run-gemini-cli/security/advisories/GHSA-wpqr-6v78-jr5g
+  - Supports maintaining version gates and trust-model review for headless
+    Gemini CLI automation, especially untrusted CI input, workspace trust, and
+    tool allowlisting.
+  - Limit: advisory-specific; do not generalize to all Gemini API use.
 
 - A0, Anthropic, "Prompting Claude Fable 5":
   https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/prompting-claude-fable-5

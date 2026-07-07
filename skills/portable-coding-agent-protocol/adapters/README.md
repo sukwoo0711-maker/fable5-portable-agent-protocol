@@ -31,6 +31,12 @@ approvals requested, checks observed, and final claims tied to evidence.
   models.
 - `gemini-worker-contracts.md`: schema-bound contracts for Gemini-style
   dispatcher, compressor, planner, candidate, and diff-claim workers.
+- `runtime-enforcement-bridge.md`: broker-side enforcement bridge that turns
+  operating rules into schemas, allowlists, budgets, sandbox/worktree checks,
+  logging, and completion gates.
+- `maintenance-private-layer.md`: maintenance and private-layer split for
+  enterprise deployments, including source freshness, adapter cadence, and
+  public/private boundary rules.
 - `self-healing-routine.md`: bounded scheduled/event automation loop with
   allowlists, retry limits, evidence logging, and escalation.
 - `task-ledger.txt`: external working-memory form.

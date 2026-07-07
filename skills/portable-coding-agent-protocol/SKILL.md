@@ -101,6 +101,11 @@ Use `adapters/` when a concrete runtime mapping or lower-model form is needed:
 - `adapters/lower-model-run-prompt.md` for lower-model execution scaffolding.
 - `adapters/gemini-worker-contracts.md` for schema-bound Gemini-style worker
   roles under a stronger control plane.
+- `adapters/runtime-enforcement-bridge.md` for converting markdown operating
+  rules into enforceable broker, allowlist, sandbox, logging, and gate checks.
+- `adapters/maintenance-private-layer.md` for separating public playbooks from
+  enterprise-local paths, policies, schedulers, evals, and source-maintenance
+  cadence.
 - `adapters/self-healing-routine.md` for scheduled or event-triggered recovery
   loops that must remain bounded and reviewable.
 - `adapters/task-ledger.txt`, `adapters/pre-edit-checklist.md`,

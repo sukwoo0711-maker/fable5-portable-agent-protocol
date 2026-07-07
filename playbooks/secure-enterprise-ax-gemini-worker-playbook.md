@@ -25,6 +25,18 @@ The system is only as strong as its harness. Prompt text can guide behavior, but
 runtime logs, schema validation, tests, diffs, approvals, and human review create
 the real control boundary.
 
+## Drawback Remediation
+
+| Known Drawback | Mitigation In This Playbook |
+| --- | --- |
+| Markdown cannot enforce behavior. | Use `runtime-enforcement-bridge.md` to convert instructions into schema validation, allowlists, sandbox/worktree execution, retry caps, diff inspection, and observed-evidence gates. |
+| Initial setup is expensive. | Start with P1 audited mode, then add P2 guarded writers, then add P3 enterprise controls only for CI, production, credentials, hardware, or private repositories. |
+| Full process can slow small tasks. | Use mode routing: `fast_read` for tiny read-only work, `fast_worker` for public/internal non-edit work, `standard_edit` for scoped edits, and `high_risk` for sensitive changes. |
+| Gemini can be verbose, loopy, or over-eager. | Enforce JSON-only responses, max output tokens, max tool calls, max changed files, one retry for the same error, and patch intent before edits. |
+| Strict evidence gates can make agents timid. | Give low-risk modes explicit fast paths and allow `proposed` outputs without claiming completion. Escalate only when evidence is required and missing. |
+| Product docs drift. | Use `maintenance-private-layer.md` for source freshness, release-note cadence, and adapter-owned product names. |
+| Enterprise-specific details do not belong in public docs. | Keep reusable schemas public and real endpoints, repo names, commands, schedules, approvals, logs, and eval results in a private layer. |
+
 ## Architecture
 
 ```mermaid
@@ -112,6 +124,22 @@ Agent Gateway, Agent Identity, IAM, private connectivity, tracing, and Model
 Armor-style prompt/response policy. If running locally, emulate those controls
 with allowlists, sandboxing, central settings, trace logs, and review gates.
 
+## From Guidance To Enforcement
+
+Apply the enforcement ladder from `adapters/runtime-enforcement-bridge.md`:
+
+1. P1, Audited: all Gemini workers must emit JSON and every run records
+   `work-order.json`, `worker-output.json`, and `gate-result.json`.
+2. P2, Guarded: any worker that can write must run inside a sandbox or temporary
+   branch/worktree with command and write-root allowlists.
+3. P3, Enforced: CI, private repositories, production-adjacent tasks, and
+   credentials require broker-level policy, identity, approval, and egress
+   controls.
+
+Do not wait for a full platform to start. Make schema validation and trace logs
+the first hard gate; they remove most of the "fluent but unverifiable" failure
+mode.
+
 ## Data Release Rules
 
 | Data Class | Cloud Worker Rule | Allowed Form |
@@ -124,6 +152,13 @@ with allowlists, sandboxing, central settings, trace logs, and review gates.
 The local scout should prefer evidence packets over raw files. A useful packet
 contains paths, line numbers, symbol names, command summaries, and uncertainty,
 not entire source trees.
+
+Enterprise contracts reduce provider-side risk, but they do not remove the need
+for a private operational layer. Public repositories should not expose real repo
+names, proxy routes, scheduler names, command allowlists, approval chains,
+incident patterns, internal tickets, cost centers, or proprietary eval results.
+Put those values in a private adapter and keep this public repo as the portable
+shape.
 
 ## Work Order Contract
 
@@ -182,6 +217,27 @@ Gemini responds only with a schema-bound result:
   ],
   "unresolved": []
 }
+```
+
+## Gemini Failure Suppression
+
+Gemini's common worker failures are handled as runtime gates, not as reminders:
+
+| Failure | Suppression Control |
+| --- | --- |
+| Decorative prose or inflated reports | `response_schema`, JSON-only prompt wrapper, `prose_allowed=false`, low `max_output_tokens`. |
+| Repetition loop | `max_tool_calls`, `max_same_error_retries=1`, wall-clock timeout, and stuck-pattern detection. |
+| Over-editing | `max_changed_files`, `write_roots`, patch intent review, and diff scope gate. |
+| Tool misuse | Tool allowlist, denied shell patterns, MCP allowlist, and untrusted-input read-only mode. |
+| False completion | Final claims require observed command output, exit codes, diff inspection, or unresolved disclosure. |
+| Excessive tool calls | Lower `thinking_level` for mechanical roles and add an explicit "no tools unless needed by work order" system rule. |
+
+Recommended worker wrapper:
+
+```text
+Return only JSON. No markdown. No preamble. No apology. No completion claim.
+Use at most N tool calls. If the next action is not in allowed_actions, set
+status to needs_escalation. If evidence is missing, list it in unresolved.
 ```
 
 ## Self-Healing Automation
@@ -312,20 +368,37 @@ Keep the architecture portable:
 Gemini is a worker plug-in. The AX system should survive if Gemini is slower,
 rate-limited, retired, or replaced.
 
+## Maintenance Model
+
+Use `adapters/maintenance-private-layer.md` as the operating rhythm:
+
+- Weekly: review worker rejects, loops, broad diffs, and repeated escalations.
+- Monthly: check Gemini, Antigravity, ADK, Agent Runtime, A2A, MCP, and security
+  advisories for drift.
+- Quarterly: rerun local evals and provider failover drills.
+- Before public releases: scan for secrets, internal names, private paths,
+  proprietary eval results, and overbroad claims.
+
+Product-specific settings such as `thinking_level`, `store:false`, CLI trust
+settings, or enterprise gateway names belong in adapters. The core playbook
+should keep role contracts and evidence rules stable even when products move.
+
 ## Tomorrow Rollout
 
 1. Create a repo allowlist and command allowlist.
 2. Add a `runtime-capabilities.yaml` adapter for the enterprise workstation.
-3. Add explicit worker contracts for `dispatcher`, `compressor`,
+3. Add `runtime-enforcement-bridge.md` policy values for mode routing,
+   allowlists, retry caps, output caps, and gate artifacts.
+4. Add explicit worker contracts for `dispatcher`, `compressor`,
    `test_planner`, `patch_candidate`, and `diff_claim_extractor`.
-4. Configure Gemini API or approved Antigravity/enterprise endpoint. Avoid
+5. Configure Gemini API or approved Antigravity/enterprise endpoint. Avoid
    relying on retired consumer Gemini CLI paths.
-5. Configure the local broker: redaction, `store: false` where applicable,
+6. Configure the local broker: redaction, `store: false` where applicable,
    telemetry without prompt logging, model allowlist, proxy/gateway, and per-task
    budgets.
-6. Put stable public runbooks and schemas in cached context where the API and
+7. Put stable public runbooks and schemas in cached context where the API and
    retention policy support it.
-7. Add a local trace file per run:
+8. Add a local trace file per run:
 
    ```text
    runs/<date>/<task-id>/trace.jsonl
@@ -334,13 +407,13 @@ rate-limited, retired, or replaced.
    runs/<date>/<task-id>/verification.txt
    ```
 
-8. Pilot on three low-risk tasks:
+9. Pilot on three low-risk tasks:
    - analysis-only repository inventory,
    - test generation without code edits,
    - one small mechanical patch in a temporary branch.
-9. Score each run for schema validity, evidence quality, verification success,
+10. Score each run for schema validity, evidence quality, verification success,
    scope control, privacy compliance, cost, and latency.
-10. Only then enable scheduled self-healing routines, starting with read-only
+11. Only then enable scheduled self-healing routines, starting with read-only
    diagnosis and branch-only patch proposals.
 
 ## Metrics
@@ -379,6 +452,12 @@ gemini_worker_policy:
   output_schema_required: true
   max_code_retry_attempts: 2
   max_diagnostic_retry_attempts: 3
+  worker_limits:
+    max_tool_calls: 8
+    max_same_error_retries: 1
+    max_changed_files: 3
+    max_output_tokens: 1200
+    prose_allowed: false
   allowed_default_roles:
     - dispatcher
     - context_compressor

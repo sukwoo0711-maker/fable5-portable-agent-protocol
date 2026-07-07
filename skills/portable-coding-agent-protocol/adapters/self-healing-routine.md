@@ -25,6 +25,13 @@ write_allowlist:
 max_attempts:
   diagnostic: 3
   code_change: 2
+worker_limits:
+  max_tool_calls: 8
+  max_same_error_retries: 1
+  max_changed_files: 3
+  max_output_tokens: 1200
+  prose_allowed: false
+  completion_claim_requires_observed_evidence: true
 network_policy: "disabled | approved_endpoints_only"
 secret_policy: "never_read_or_emit"
 branch_policy: "temporary_branch_or_worktree"
@@ -49,11 +56,14 @@ approval_required_for:
    changes.
 7. Redact or block sensitive content before any cloud call.
 8. Ask Gemini for a schema-bound diagnosis and recovery plan.
-9. Validate the plan against the manifest.
-10. Apply only safe mechanical recovery in a branch or worktree.
-11. Run exact verification.
-12. Record the result and update local failure memory.
-13. Escalate after repeated failure, forbidden action, or missing evidence.
+9. Reject the worker output if it contains prose outside the schema, exceeds
+   worker limits, repeats the same tool error, or claims completion without
+   observed evidence.
+10. Validate the plan against the manifest.
+11. Apply only safe mechanical recovery in a branch or worktree.
+12. Run exact verification.
+13. Record the result and update local failure memory.
+14. Escalate after repeated failure, forbidden action, or missing evidence.
 
 ## Failure Memory Entry
 
@@ -88,6 +98,16 @@ Stop immediately when:
 - The fix would require production, hardware, credentials, or destructive
   changes.
 - The model cannot produce a plan that validates against the schema.
+- The worker emits markdown, preamble, apology text, or other prose when the
+  manifest requires schema-only output.
+- The worker exceeds the allowed tool-call, output-token, retry, or
+  changed-file budget.
+- The worker repeats the same tool error once instead of returning an
+  unresolved state.
+- The worker claims success without observed command output, exit codes, diff
+  inspection, or equivalent verification evidence.
+- The proposed patch touches paths outside the write allowlist or declared
+  patch intent.
 
 ## CI Automation Controls
 
