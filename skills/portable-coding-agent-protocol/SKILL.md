@@ -106,8 +106,9 @@ Use `adapters/` when a concrete runtime mapping or lower-model form is needed:
 - `adapters/maintenance-private-layer.md` for separating public playbooks from
   enterprise-local paths, policies, schedulers, evals, and source-maintenance
   cadence.
-- `adapters/self-healing-routine.md` for scheduled or event-triggered recovery
-  loops that must remain bounded and reviewable.
+- `adapters/recovery-automation-possibility.md` for evidence-bounded discussion
+  of optional recovery automation that must be enabled, if at all, only by the
+  private enterprise layer.
 - `adapters/task-ledger.txt`, `adapters/pre-edit-checklist.md`,
   `adapters/evidence-record.md`, and `adapters/pre-final-review.md` for
   external working-memory forms.

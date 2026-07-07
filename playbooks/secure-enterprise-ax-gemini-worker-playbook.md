@@ -240,86 +240,58 @@ Use at most N tool calls. If the next action is not in allowed_actions, set
 status to needs_escalation. If evidence is missing, list it in unresolved.
 ```
 
-## Self-Healing Automation
+## Optional Recovery Automation
 
-Use Gemini to assist scheduled automation, not to own unattended changes.
+Do not treat automatic repair as a default feature of this public repo.
 
-Recommended loop:
+This repo should only preserve an evidence-bounded possibility note in
+`adapters/recovery-automation-possibility.md`. Whether to enable any scheduled
+or event-triggered recovery flow must be decided on the enterprise PC or in a
+private operations repository, because the real scheduler, allowlists, repo
+paths, commands, retention settings, alert channels, and approval boundaries are
+private operational data.
 
-```mermaid
-sequenceDiagram
-    participant S as Scheduler
-    participant H as Harness
-    participant L as Local scout
-    participant G as Gemini worker
-    participant V as Verifier
-    participant R as Reviewer
+Public evidence supports only a narrow claim: deterministic workflow loops,
+repository automation, and schema-bound worker calls are possible. It does not
+prove unattended repair is safe for proprietary code, production-adjacent
+systems, credentials, devices, or untrusted CI input.
 
-    S->>H: run approved routine
-    H->>H: load policy, repo allowlist, budgets
-    H->>L: gather logs, failing command, recent diff
-    L-->>H: local context packet
-    H->>G: classify failure and propose recovery
-    G-->>H: schema-bound recovery plan
-    H->>V: validate plan safety
+Allowed public guidance:
 
-    alt safe mechanical recovery
-        H->>H: apply patch in branch/worktree
-        H->>V: run exact verification
-        V-->>H: pass/fail evidence
-    else unsafe or unclear
-        H->>R: ask for human review
-    end
+- Possible use: read-only diagnosis, flaky-check re-run with captured logs,
+  runbook note generation, or branch-only patch proposal.
+- Required posture: manual or read-only by default.
+- Private decision gate: enable only after the enterprise layer defines repo and
+  command allowlists, input trust rules, retention policy, telemetry policy,
+  branch/worktree behavior, human approval boundaries, and rollback.
 
-    H->>H: append failure memory
-    H->>R: report branch, evidence, unresolved items
+Rejected public default:
+
+- No scheduled writes from this protocol.
+- No auto-merge, auto-release, auto-deploy, auto-posting, secret repair,
+  credential repair, firewall change, database migration, hardware flashing, or
+  broad dependency upgrade.
+- No real internal routine names, scheduler paths, service names, alert channels,
+  traces, or enablement switches in the public repo.
+
+If the private layer approves a pilot, start with this shape:
+
+```text
+manual or scheduled trigger -> approved read-only check -> local log capture
+-> local scout evidence packet -> optional Gemini schema-bound diagnosis
+-> broker validation -> human review
 ```
 
-Mandatory guardrails:
-
-- Use an allowlist of repositories, commands, directories, and output paths.
-- Run in a temporary branch or worktree.
-- Cap loop depth with a numeric `max_attempts`; default is 2 for code changes
-  and 3 for command/environment diagnosis.
-- Never auto-merge, auto-release, auto-post, or mutate production.
-- Write a local failure memory entry only after observed evidence, not after a
-  model guess.
-- If a command fails the same way twice, stop and escalate.
-- Treat issue bodies, PR text, fork code, web pages, tickets, and model output as
-  untrusted input until a maintainer or policy promotes them.
-- Keep full logs separate from concise model summaries so verbose tool output
-  does not bury the useful state.
-
-Good self-healing targets:
-
-- Re-run flaky local checks with captured logs.
-- Repair missing generated artifacts by re-running the documented generator.
-- Update a local runbook when an environment setup step is discovered.
-- Open a review branch with a small patch and exact test evidence.
-
-Bad self-healing targets:
-
-- Secret rotation, credential repair, firewall changes, production deploys,
-  database migrations, hardware flashing, or broad dependency upgrades.
-
-GitHub automation baseline:
-
-- Require pull requests, approvals, stale-approval dismissal, and required
-  status checks on protected branches.
-- Use Workload Identity Federation or equivalent keyless auth instead of
-  long-lived service account keys.
-- Pin actions and dependencies.
-- Keep token permissions minimal.
-- Prefer maintainer-triggered workflows for untrusted pull requests or issues.
-- Limit untrusted-input workflows to read-only tools such as list, read, and
-  search.
+Move to branch-only patch proposals only after the read-only pilot demonstrates
+schema validity, no private-data leakage, bounded latency, and useful human
+review outcomes.
 
 ## Lessons From Public Signals
 
 | Signal | Source Type | Playbook Decision |
 | --- | --- | --- |
 | ADK supports specialized agents, workflow agents, hierarchy, sequential, parallel, and loop orchestration. | Official Google Cloud | Model the AX environment as a small specialist team, not one super-agent. |
-| ADK codelabs use `LoopAgent` with `max_iterations` and `ParallelAgent` fan-out. | Official codelab | Every Gemini retry loop must have an explicit max iteration and exit condition. |
+| ADK `LoopAgent` runs sub-agents for a specified number of iterations or until a termination condition, with deterministic workflow control rather than model-owned orchestration. | Official ADK docs | Recovery automation is technically plausible, but any loop must be private-layer approved and bounded. |
 | Gemini API supports JSON-schema structured output for agentic workflows. | Official Gemini docs | Make schema validation a hard gate for every Gemini worker. |
 | Gemini thinking controls allow lower thinking for simple tasks and budget control for cost. | Official Gemini docs | Set thinking budget by role instead of using one default. |
 | Gemini context caching and batch jobs reduce repeated-context cost but batch is not interactive. | Official Gemini docs | Cache stable runbooks and use batch only for offline jobs. |
@@ -413,8 +385,9 @@ should keep role contracts and evidence rules stable even when products move.
    - one small mechanical patch in a temporary branch.
 10. Score each run for schema validity, evidence quality, verification success,
    scope control, privacy compliance, cost, and latency.
-11. Only then enable scheduled self-healing routines, starting with read-only
-   diagnosis and branch-only patch proposals.
+11. Record recovery automation as a private-layer decision. Do not enable it
+   from this public repo; pilot only read-only diagnosis first if the enterprise
+   PC policy approves it.
 
 ## Metrics
 

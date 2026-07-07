@@ -46,6 +46,13 @@ must be phrased as a hypothesis.
   - Limit: integration pattern only; local security controls still belong in
     the runtime.
 
+- A1, Google ADK, "Loop workflow":
+  https://adk.dev/agents/workflow-agents/loop-agents/
+  - Supports LoopAgent as a deterministic workflow agent that runs sub-agents
+    for a specified number of iterations or until a termination condition.
+  - Limit: supports the technical possibility of bounded iterative workflows;
+    it does not prove unattended repair is safe in an enterprise workstation.
+
 - A0, Google Cloud Blog, "Building Collaborative AI: A Developer's Guide to
   Multi-Agent Systems with ADK", 2025-11-06:
   https://cloud.google.com/blog/topics/developers-practitioners/building-collaborative-ai-a-developers-guide-to-multi-agent-systems-with-adk
@@ -263,10 +270,11 @@ must be phrased as a hypothesis.
 - Low-star Fable prompt packs and skill repos: useful for demand discovery and
   anti-pattern mining, not for efficacy claims.
 - GitHub issues, Hacker News threads, Reddit posts, and transcriptless YouTube
-  videos about Gemini CLI, Antigravity, skills, subagents, or self-healing
-  loops: useful as risk-discovery signals and field anecdotes only. They may
-  motivate controls such as explicit skill invocation, retry budgets,
-  structured outputs, and verifier gates, but they do not prove performance.
+  videos about Gemini CLI, Antigravity, skills, subagents, or recovery
+  automation: useful as risk-discovery signals and field anecdotes only. They
+  may motivate controls such as explicit skill invocation, retry budgets,
+  structured outputs, and verifier gates, but they do not prove performance or
+  safety.
 - Vendor reviews and press trend pieces: useful for topic discovery only.
 - Transcriptless YouTube results: not evidence unless the dated transcript is
   accessible and the author qualifies as a recognized expert.
@@ -284,4 +292,6 @@ must be phrased as a hypothesis.
 - Use lazy-loaded references rather than one monolithic instruction file.
 - Add lower-model scaffolds for state, decomposition, evidence, uncertainty,
   recovery, self-review, stop rules, and completion gates.
+- Treat recovery automation as a possible private-layer extension, not a public
+  default or proof-backed safety feature.
 - Require local evaluation before claiming uplift.

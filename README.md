@@ -57,7 +57,8 @@ and explicit verification.
 
 For secure enterprise AX deployments that use Gemini or another lower-cost cloud
 model as a worker, start with the secure enterprise playbook and then fill in the
-Gemini worker and self-healing routine adapters.
+Gemini worker contracts. Treat recovery automation as an optional private-layer
+decision, not a public repo default.
 
 ## What This Does Not Promise
 

@@ -30,7 +30,7 @@ that make those shapes executable in one organization.
 | Generic worker contract. | Actual model endpoint, region, account, project, and quota. |
 | Example policy skeleton. | Real command allowlist, write roots, denied commands, and exception list. |
 | Data class definitions. | Internal data catalog and repo-specific classification. |
-| Self-healing routine template. | Real scheduler, service names, branch naming, and alert channel. |
+| Optional recovery automation possibility note. | Real scheduler, service names, branch naming, enablement switch, and alert channel. |
 | Synthetic trace examples. | Real traces, logs, costs, and failure memory. |
 | Source notes and claims. | Enterprise contract terms and legal/security approvals. |
 
@@ -45,7 +45,7 @@ enterprise-ax-private/
   command-allowlist.yaml
   repo-allowlist.yaml
   data-classification.yaml
-  scheduler-routines.yaml
+  optional-automation-routines.yaml
   approval-boundaries.yaml
   failure-memory/
   traces/

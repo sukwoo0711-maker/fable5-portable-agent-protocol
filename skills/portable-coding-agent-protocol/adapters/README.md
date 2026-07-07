@@ -37,8 +37,9 @@ approvals requested, checks observed, and final claims tied to evidence.
 - `maintenance-private-layer.md`: maintenance and private-layer split for
   enterprise deployments, including source freshness, adapter cadence, and
   public/private boundary rules.
-- `self-healing-routine.md`: bounded scheduled/event automation loop with
-  allowlists, retry limits, evidence logging, and escalation.
+- `recovery-automation-possibility.md`: non-default possibility note for
+  read-only or branch-only recovery automation that must be approved and
+  configured in a private enterprise layer.
 - `task-ledger.txt`: external working-memory form.
 - `pre-edit-checklist.md`: concrete before-edit guard.
 - `evidence-record.md`: claim-to-evidence form.
